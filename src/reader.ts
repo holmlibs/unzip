@@ -45,9 +45,7 @@ function findEOCD(buffer: Buffer): number {
  * @returns A map where each key is an entry name and each value is the corresponding {@link ZipEntry}.
  * @throws {Error} If the EOCD record is not found or the archive seems corrupt.
  */
-export function getEntriesFromCentralDirectory(
-	buffer: Buffer,
-): Map<string, ZipEntry> {
+export function getEntries(buffer: Buffer): Map<string, ZipEntry> {
 	const eocdOffset = findEOCD(buffer);
 	if (eocdOffset === -1) {
 		throw new Error('End of Central Directory record not found.');
@@ -212,7 +210,7 @@ export function decompressEntry(
  */
 export function createZipReader(archivePath: string): ZipReader {
 	const buffer = readFileSync(archivePath);
-	const entries = getEntriesFromCentralDirectory(buffer);
+	const entries = getEntries(buffer);
 
 	return {
 		extractAll: (
@@ -220,6 +218,7 @@ export function createZipReader(archivePath: string): ZipReader {
 			onProgress = () => {},
 			concurrencyLimit = DEFAULT_CONCURRENCY,
 		) => extractAll(buffer, entries, directory, onProgress, concurrencyLimit),
+		getEntries: () => entries,
 		getEntry: (entryName) => {
 			const entry = entries.get(entryName);
 			if (!entry) return;

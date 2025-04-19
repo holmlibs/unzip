@@ -23,6 +23,8 @@ export interface ZipReader {
 		concurrencyLimit?: number,
 	) => Promise<void>;
 
+	getEntries: () => Map<string, ZipEntry>;
+
 	/**
 	 * Gets a specific entry from the archive by its name
 	 * @param entryName - The name of the entry to retrieve (e.g., 'file.txt', 'folder/file.json')

@@ -16,7 +16,7 @@ import { ensureDirectory, getErrorMessage, validatePath } from './utils';
  *
  * @returns A promise that resolves when the entry has been extracted.
  */
-async function extractEntry(
+export async function extractEntry(
 	buffer: Buffer,
 	[entryName, compressionType, rawDataPos]: ZipEntry,
 	outputDir: string,

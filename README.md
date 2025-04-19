@@ -43,39 +43,94 @@ if (entry) {
 }
 ```
 
-## API Reference
+## High-Level API Examples
 
-### `createZipReader(archivePath: string): ZipReader`
+The high-level API provides a convenient interface using `createZipReader`.
 
-Creates a new ZIP reader instance for the specified archive.
+### Extract All Files
 
-### ZipReader Interface
+```typescript
+await createZipReader('test.zip').extractAll('test');
+```
+Extracts all files from 'test.zip' to the 'test' directory.
 
-#### `extractAll(directory: string, onProgress?: (current: number, total: number) => void, concurrencyLimit?: number): Promise<void>`
+### Extract Single File
 
-Extracts all files from the archive to the specified directory.
+```typescript
+await createZipReader('test.zip').getEntry('example.txt')?.extractTo('test');
+```
+Extracts only 'example.txt' from the ZIP file to the 'test' directory.
 
-- `directory`: Target directory for extraction
-- `onProgress`: Optional callback for progress tracking
-- `concurrencyLimit`: Optional limit for concurrent extractions (default: 100)
+### List All Entries
 
-#### `getEntry(entryName: string): ZipEntry | undefined`
+```typescript
+createzipReader('test.zip').getEntries();
+```
+Returns a Map containing all entries in the ZIP file.
 
-Retrieves a specific entry from the archive.
+### Get File Buffer
 
-### ZipEntry Interface
+```typescript
+await createZipReader('test.zip').getEntry('example.txt')?.getBuffer();
+```
+Returns the raw buffer content of 'example.txt'.
 
-#### `getBuffer(): Promise<Buffer>`
+### Get File Text
 
-Returns the entry's content as a Buffer.
+```typescript
+await createZipReader('test.zip').getEntry('example.txt')?.getText();
+```
+Returns the text content of 'example.txt' (assumes UTF-8 encoding).
 
-#### `getText(encoding?: string): Promise<string>`
+## Low-Level API Examples
 
-Returns the entry's content as text.
+The low-level API provides more control over the extraction process.
 
-#### `extractTo(directory: string): Promise<void>`
+### List Entry Details
 
-Extracts the entry to the specified directory.
+```typescript
+const buffer = readFileSync('test.zip');
+const entries = getEntries(buffer);
+entries.forEach((entry) => {
+    console.log('Entry name', entry[0]); 
+    console.log('Compression method', entry[1]);
+    console.log('Position data', entry[2]);
+});
+```
+Lists detailed information about each entry in the ZIP file.
+
+### Extract All Files (Low-Level)
+
+```typescript
+const buffer = readFileSync('test.zip');
+const entries = getEntries(buffer);
+await extractAll(buffer, entries, 'test');
+```
+Extracts all files using the low-level API.
+
+### Extract Single File (Low-Level)
+
+```typescript
+const buffer = readFileSync('test.zip');
+const entries = getEntries(buffer);
+const entry = entries.get('example.txt');
+if(entry)
+    await extractEntry(buffer, entry, 'test');
+```
+Extracts a single file using the low-level API.
+
+### Manual Decompression
+
+```typescript
+const buffer = readFileSync('test.zip');
+const entries = getEntries(buffer);
+const entry = entries.get('example.txt');
+if(entry){
+    const decompressed = await decompressEntry(buffer, entry);
+    await writeFile(join('test', entry[0]), decompressed);
+}
+```
+Manually decompresses and writes a file using the lowest-level API functions.
 
 ## License
 
