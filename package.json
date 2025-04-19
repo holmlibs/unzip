@@ -1,7 +1,14 @@
 {
-	"name": "unzipper",
+	"name": "@holmlibs/unzip",
 	"version": "0.0.0",
-	"description": "A file unzipper library for Bun",
+	"description": "A fast and efficient ZIP file extraction library for Bun",
+	"author": "holmityd",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/holmlibs/unzip"
+	},
+	"keywords": ["bun", "zip", "unzip", "extract", "archive", "compression"],
 	"type": "module",
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.mjs",
