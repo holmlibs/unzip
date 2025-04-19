@@ -6,7 +6,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/holmlibs/unzip"
+		"url": "git+https://github.com/holmlibs/unzip.git"
 	},
 	"keywords": [
 		"bun",
