@@ -23,6 +23,12 @@ export interface ZipReader {
 		concurrencyLimit?: number,
 	) => Promise<void>;
 
+	/**
+	 * Retrieves a map of all entries in the archive.
+	 *
+	 * @returns A Map where the keys are entry names (e.g., 'file.txt', 'folder/file.json')
+	 * and the values are `ZipEntry` objects representing each file or directory in the archive.
+	 */
 	getEntries: () => Map<string, ZipEntry>;
 
 	/**

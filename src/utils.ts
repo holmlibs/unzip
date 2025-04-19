@@ -1,10 +1,28 @@
 import { mkdir, stat } from 'node:fs/promises';
 import { dirname, join, resolve, sep } from 'node:path';
 
+/**
+ * Converts any error object or value into a string message.
+ *
+ * @param error - The error object or value to convert.
+ * @returns A string representation of the error message.
+ */
 export function getErrorMessage(error: unknown): string {
 	return error instanceof Error ? error.message : String(error);
 }
 
+/**
+ * Ensures that the parent directory of the given target path exists.
+ *
+ * If the directory is not already tracked in `createdDirs`, it attempts to
+ * create it recursively. If directory creation fails due to a race condition
+ * or permissions issue, it checks if the directory already exists before throwing.
+ *
+ * @param targetPath - The full path whose parent directory should be ensured.
+ * @param createdDirs - A Set tracking directories that have already been created.
+ * @returns A Promise that resolves once the parent directory exists.
+ * @throws {Error} If the directory cannot be created and does not already exist.
+ */
 export async function ensureDirectory(
 	targetPath: string,
 	createdDirs: Set<string>,
@@ -35,6 +53,14 @@ export async function ensureDirectory(
 	}
 }
 
+/**
+ * Validates and normalizes a ZIP entry path to prevent directory traversal attacks.
+ *
+ * @param entryName - The name of the entry from the ZIP archive.
+ * @param outputDir - The target directory where files will be extracted.
+ * @returns A safe, normalized absolute path within the output directory.
+ * @throws {Error} If the path would escape the output directory (zip slip attack).
+ */
 export function validatePath(entryName: string, outputDir: string): string {
 	// Normalize & verify the path to avoid zip-slip attacks
 	const safeName = entryName
