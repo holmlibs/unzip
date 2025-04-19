@@ -163,9 +163,10 @@ async function extractAll(
 	let current = 0;
 
 	// Defensive: guarantee progress even with bad input
-	if (concurrencyLimit < 1 || !Number.isFinite(concurrencyLimit)) {
-		concurrencyLimit = 1;
-	}
+	const effectiveConcurrencyLimit =
+		concurrencyLimit < 1 || !Number.isFinite(concurrencyLimit)
+			? 1
+			: concurrencyLimit;
 
 	// Function to process a single entry
 	const processEntry = async (entry: ZipEntry): Promise<void> => {
@@ -188,7 +189,10 @@ async function extractAll(
 	// Loop to manage concurrency
 	while (true) {
 		// Fill the pool up to the concurrency limit as long as there are entries
-		while (activePromises.length < concurrencyLimit && !iteratorResult.done) {
+		while (
+			activePromises.length < effectiveConcurrencyLimit &&
+			!iteratorResult.done
+		) {
 			const promise = processEntry(iteratorResult.value).then(() => {
 				// When a promise finishes, remove it from the active pool
 				const index = activePromises.indexOf(promise);
