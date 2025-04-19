@@ -1,8 +1,8 @@
-import { describe, expect, test, beforeAll, afterAll } from "bun:test";
-import { join } from "path";
+import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { mkdir, rm, writeFile } from "fs/promises";
-import { createZipReader } from "../src/reader";
 import JSZip from "jszip";
+import { join } from "path";
+import { createZipReader } from "../src/reader";
 
 const TEST_DIR = "test/temp";
 const TEST_ZIP = join(TEST_DIR, "test.zip");
@@ -30,6 +30,7 @@ describe("ZipReader", () => {
     expect(reader).toBeDefined();
     expect(typeof reader.extractAll).toBe("function");
     expect(typeof reader.getEntry).toBe("function");
+    expect(typeof reader.getEntries).toBe("function");
   });
 
   test("getEntry should return undefined for non-existent entry", () => {
