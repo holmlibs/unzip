@@ -1,6 +1,6 @@
 {
 	"name": "unzipper",
-	"version": "1.0.0",
+	"version": "0.0.0",
 	"description": "A file unzipper library for Bun",
 	"type": "module",
 	"main": "./dist/index.cjs",
