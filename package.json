@@ -29,7 +29,9 @@
 		"format": "biome format --write .",
 		"lint": "biome lint .",
 		"check": "biome check --write .",
-		"test": "bun test"
+		"test": "bun test",
+		"prerelease": "bun run build",
+		"release": "npx standard-version && git push --follow-tags origin main && npm publish"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
