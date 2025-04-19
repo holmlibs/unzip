@@ -1,0 +1,33 @@
+{
+	"name": "unzipper",
+	"version": "1.0.0",
+	"description": "A file unzipper library for Bun",
+	"type": "module",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"files": ["dist"],
+	"exports": {
+		".": {
+			"require": "./dist/index.cjs",
+			"import": "./dist/index.mjs",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"scripts": {
+		"build:cjs": "bun build ./src/index.ts --target node --minify --format cjs --outfile ./dist/index.cjs",
+		"build:mjs": "bun build ./src/index.ts --target node --minify --format esm --outfile ./dist/index.mjs",
+		"build:types": "tsc --emitDeclarationOnly --declaration --outDir dist",
+		"build": "bun run build:cjs && bun run build:mjs && bun run build:types",
+		"format": "biome format --write .",
+		"lint": "biome lint .",
+		"check": "biome check --write ."
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@types/bun": "latest"
+	}
+}
