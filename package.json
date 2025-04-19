@@ -28,6 +28,8 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@types/bun": "latest"
+		"@types/bun": "latest",
+		"jszip": "^3.10.1",
+		"@types/jszip": "^3.4.1"
 	}
 }
