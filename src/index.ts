@@ -1,9 +1,7 @@
-export { createZipReader } from './reader';
-export { getEntriesFromCentralDirectory } from './reader';
+export { createZipReader, getEntriesFromCentralDirectory } from './reader';
 export type {
-	ZipReader,
 	EntryReturnType,
 	ZipEntry,
 	ZipProgressCallback,
-	BufferEncoding,
+	ZipReader,
 } from './types';
