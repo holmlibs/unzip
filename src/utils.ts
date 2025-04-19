@@ -1,5 +1,5 @@
-import { dirname, join, resolve, sep } from 'node:path';
 import { mkdir, stat } from 'node:fs/promises';
+import { dirname, join, resolve, sep } from 'node:path';
 
 export function getErrorMessage(error: unknown): string {
 	return error instanceof Error ? error.message : String(error);
