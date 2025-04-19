@@ -9,10 +9,10 @@
 		"jsx": "react-jsx",
 		"allowJs": true,
 
-    // Types
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "outDir": "dist",
+		// Types
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"outDir": "dist",
 
 		// Bundler mode
 		"moduleResolution": "bundler",
