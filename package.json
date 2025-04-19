@@ -28,7 +28,8 @@
 		"build": "bun run build:cjs && bun run build:mjs && bun run build:types",
 		"format": "biome format --write .",
 		"lint": "biome lint .",
-		"check": "biome check --write ."
+		"check": "biome check --write .",
+		"test": "bun test"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
